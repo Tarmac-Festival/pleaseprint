@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "pleaseprint"
+version = "0.1.0"
+description = ""
+authors = ["Paul Spooren <mail@aparcar.org>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pycups = "^2.0.4"
+fastapi = {extras = ["standard"], version = "^0.112.0"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

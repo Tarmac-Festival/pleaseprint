@@ -1,0 +1,25 @@
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>Document</th>
+        <th>Status</th>
+        <th>Time Finished</th>
+    </tr>
+    {% for job in jobs %}
+    <tr>
+        <td>{{ job.id }}</td>
+        <td
+            style="
+                max-width: 200px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            "
+        >
+            {{ job.file }}
+        </td>
+        <td>{{ job.status }}</td>
+        <td>{{ job.time }}</td>
+    </tr>
+    {% endfor %}
+</table>
