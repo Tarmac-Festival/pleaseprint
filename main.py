@@ -43,6 +43,9 @@ async def print_file(
     file: UploadFile = File(),
     copies: Annotated[int, Form()] = 1,
     pages: Annotated[str, Form()] = "",
+    number_up: Annotated[int, Form()] = 1,
+    page_set: Annotated[str, Form()] = "all",
+    scale_to_fit: Annotated[bool, Form()] = False,
 ):
     if file.content_type != "application/pdf":
         return '<div class="alert alert-danger" role="alert">Only PDF files are allowed</div>'
@@ -51,6 +54,15 @@ async def print_file(
 
     if pages != "":
         options["pages"] = pages
+
+    if number_up != 1:
+        options["number-up"] = str(number_up)
+
+    if page_set != "all":
+        options["page-set"] = page_set
+
+    if scale_to_fit:
+        options["fit-to-page"] = "true"
 
     print(file.filename, copies, pages)
     with TemporaryDirectory() as temp_dir:
@@ -94,3 +106,18 @@ async def queue(request: Request):
     return templates.TemplateResponse(
         request=request, name="queue.html", context={"jobs": jobs}
     )
+
+
+@app.get("/status", response_class=HTMLResponse)
+async def status(request: Request):
+    printer_info = conn.getPrinterAttributes(printer)
+    marker_level = printer_info["marker-levels"][0]
+    marker_level_low = printer_info["marker-low-levels"]
+    marker_level_max = printer_info["marker-high-levels"]
+
+    return f"""
+    <b>{printer_info['printer-info']}</b>
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {marker_level}%;" aria-valuenow="{marker_level}" aria-valuemin="0" aria-valuemax="100">{marker_level}%</div>
+    </div>
+    """
