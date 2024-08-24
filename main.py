@@ -97,7 +97,6 @@ async def queue(request: Request):
         jobs.append(
             {
                 "id": job_id,
-                "file": job["document-name-supplied"],
                 "status": cups_job_states[job["job-state"]],
                 "time": timestamp_to_str(job["time-at-completed"]),
             }
@@ -111,13 +110,8 @@ async def queue(request: Request):
 @app.get("/status", response_class=HTMLResponse)
 async def status(request: Request):
     printer_info = conn.getPrinterAttributes(printer)
-    marker_level = printer_info["marker-levels"][0]
-    marker_level_low = printer_info["marker-low-levels"]
-    marker_level_max = printer_info["marker-high-levels"]
 
     return f"""
     <b>{printer_info['printer-info']}</b>
-    <div class="progress">
-        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {marker_level}%;" aria-valuenow="{marker_level}" aria-valuemin="0" aria-valuemax="100">{marker_level}%</div>
     </div>
     """
