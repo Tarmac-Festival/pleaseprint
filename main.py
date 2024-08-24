@@ -46,6 +46,7 @@ async def print_file(
     number_up: Annotated[int, Form()] = 1,
     page_set: Annotated[str, Form()] = "all",
     scale_to_fit: Annotated[bool, Form()] = False,
+    sides: Annotated[str, Form()] = "one-sided",
 ):
     if file.content_type != "application/pdf":
         return '<div class="alert alert-danger" role="alert">Only PDF files are allowed</div>'
@@ -63,6 +64,8 @@ async def print_file(
 
     if scale_to_fit:
         options["fit-to-page"] = "true"
+
+    options["sides"] = sides
 
     print(file.filename, copies, pages)
     with TemporaryDirectory() as temp_dir:
