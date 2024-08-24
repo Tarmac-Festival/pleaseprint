@@ -18,16 +18,22 @@
                 height: 100%;
             }
 
+            .container-fluid {
+                margin-right: auto;
+                margin-left: auto;
+                max-width: 600px; /* or 950px */
+            }
+
             .form-signin {
                 max-width: 600px;
                 padding: 1rem;
             }
         </style>
     </head>
-    <body class="d-flex align-items-center">
-        <main class="form-signin w-100 m-auto">
+    <body>
+        <main class="container-fluid mt-3">
             <div class="row">
-                <div class="col-sm">
+                <div class="col">
                     <img
                         class="mx-auto d-block mb-4"
                         src="/static/pleaseprint_logo.svg"
@@ -35,7 +41,7 @@
                         width="100%"
                     />
                 </div>
-                <div class="col-sm">
+                <div class="col">
                     <img
                         class="mx-auto d-block mb-4"
                         src="/static/qr-code.svg"
@@ -45,6 +51,10 @@
                 </div>
             </div>
             <div id="msg"></div>
+            <div class="alert alert-info" role="alert">
+                Welcome to Tarmac Print! Please use this web interface instead
+                of directly connecting the printer.
+            </div>
             <div class="alert alert-warning" role="alert">
                 If broken please call <b>#1013</b> or go to
                 <tt>IT</tt>
